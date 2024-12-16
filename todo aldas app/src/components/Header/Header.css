@@ -1,0 +1,14 @@
+.header {
+    width: 100%;
+    text-align: center;
+    background-color: #ca7373;
+    color: #fff;
+    padding: 15px 0;
+    border-radius: 8px;
+  }
+  
+  .header h1 {
+    margin: 0;
+    font-size: 24px;
+  }
+  
