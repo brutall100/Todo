@@ -6,16 +6,16 @@ function Header() {
         <nav className="nav">
           <ul className="nav-list">
             <li className="nav-item">
-              <a href="/" className="nav-link">Home</a>
+              <a href="/" className="nav-link">Namai</a>
             </li>
             <li className="nav-item">
-              <a href="/about" className="nav-link">About</a>
+              <a href="/about" className="nav-link">Apie</a>
             </li>
             <li className="nav-item">
-              <a href="/features" className="nav-link">Features</a>
+              <a href="/features" className="nav-link">DII Pasiulymai</a>
             </li>
             <li className="nav-item">
-              <a href="/contact" className="nav-link">Contact</a>
+              <a href="/contact" className="nav-link">Susisiekime</a>
             </li>
           </ul>
         </nav>

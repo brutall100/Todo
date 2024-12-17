@@ -1,4 +1,4 @@
-import './NotFoundPage.css'; // Make sure the CSS file is imported.
+import './NotFoundPage.css';
 
 const NotFoundPage = () => {
   return (

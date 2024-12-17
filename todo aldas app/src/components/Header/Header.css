@@ -63,6 +63,7 @@ body {
   .nav {
     margin-top: 1rem;
     margin-bottom: 1rem;
+    text-align: left;
   }
   .nav-list {
     flex-direction: column;
