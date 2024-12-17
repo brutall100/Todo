@@ -1,14 +1,67 @@
+/* Universal styles */
+:root {
+  --primary-color: #3c552d;
+  --secondary-color: #d7b26d;
+  --accent-color: #ca7373;
+  --text-color: #eee2b5;
+  --bg-gradient: linear-gradient(135deg, #3c552d, #d7b26d, #ca7373);
+}
+
+body {
+  font-family: 'Press Start 2P', cursive; /* Retro-futuristic font */
+  overflow-x: hidden;
+}
+
+/* Header styles */
 .header {
-    width: 100%;
-    text-align: center;
-    background-color: #ca7373;
-    color: #fff;
-    padding: 15px 0;
-    border-radius: 8px;
+  width: 100%; /* Full page width */
+  /* height: 100vh; Full viewport height */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background: var(--bg-gradient);
+  color: var(--text-color);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.header-content {
+  animation: float 3s infinite ease-in-out;
+}
+
+.header-title {
+  font-size: 4rem; /* Larger title size for full-page effect */
+  text-shadow: 0 0 15px var(--accent-color), 0 0 30px var(--secondary-color);
+  margin: 0; /* Remove default margins */
+}
+
+.header-subtitle {
+  font-size: 1.5rem;
+  margin-top: 0.5rem;
+  color: var(--text-color);
+  text-shadow: 0 0 5px var(--secondary-color);
+}
+
+/* Cool animation for floating text */
+@keyframes float {
+  0% {
+    transform: translateY(0px);
   }
-  
-  .header h1 {
-    margin: 0;
-    font-size: 24px;
+  50% {
+    transform: translateY(-10px);
   }
-  
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .header-title {
+    font-size: 2.5rem;
+  }
+
+  .header-subtitle {
+    font-size: 1.2rem;
+  }
+}
