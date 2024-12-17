@@ -3,14 +3,27 @@ import './Header.css';
 function Header() {
   return (
     <header className="header">
-      <div className="header-content">
-        <h1 className="header-title">🚀 Todo Aldas App 🚀</h1>
-        <p className="header-subtitle">Where productivity meets the stars! 🌟</p>
-      </div>
+        <nav className="nav">
+          <ul className="nav-list">
+            <li className="nav-item">
+              <a href="/" className="nav-link">Home</a>
+            </li>
+            <li className="nav-item">
+              <a href="/about" className="nav-link">About</a>
+            </li>
+            <li className="nav-item">
+              <a href="/features" className="nav-link">Features</a>
+            </li>
+            <li className="nav-item">
+              <a href="/contact" className="nav-link">Contact</a>
+            </li>
+          </ul>
+        </nav>
     </header>
   );
 }
 
 export default Header;
+
 
 
