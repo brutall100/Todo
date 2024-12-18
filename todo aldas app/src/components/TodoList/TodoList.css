@@ -42,6 +42,8 @@
 .todo-item {
   background-color: var(--accent-color);
   color: var(--text-color);
+  word-break: break-all;
+  line-break: auto;
   padding: 1rem;
   border-radius: 5px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);

@@ -1,15 +1,7 @@
 import './TodoList.css';
+import PropTypes from 'prop-types';
 
-function TodoList() {
-  const todos = [
-    "Example Todo 1 dfgdfhfhddfg dfg dgd fg d  dfgsd sdfg sder rt fgh ftr trfgh fgf  fggh fhd f",
-    "Example Todo 2",
-    "Example Todo 3",
-    "Example Todo 4",
-    "Example Todo 5",
-    "Example Todo 6",
-  ];
-
+function TodoList({ todos }) {
   return (
     <div className="todo-list">
       <h2 className="todo-list-title">Mano darbai</h2>
@@ -24,5 +16,10 @@ function TodoList() {
   );
 }
 
+TodoList.propTypes = {
+  todos: PropTypes.arrayOf(PropTypes.string).isRequired,
+};
+
 export default TodoList;
+
 
