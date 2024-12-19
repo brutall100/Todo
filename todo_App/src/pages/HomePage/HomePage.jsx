@@ -1,18 +1,26 @@
 import Header from '../../components/Header/Header';
 import TodoList from '../../components/TodoList/TodoList';
 import TodoForm from '../../components/TodoForm/TodoForm';
+import { API_URL } from '../../config/Api_URL';
 import './HomePage.css';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 
 function HomePage() {
-  const [todos, setTodos] = useState([
-    "Example Todo 1 dfgdfhfhddfg dfg dgd fg d  dfgsd sdfg sder rt fgh ftr trfgh fgf  fggh fhd f",
-    "Example Todo 2",
-    "Example Todo 3",
-    "Example Todo 4",
-    "Example Todo 5",
-    "Example Todo 6",
-  ]);
+  const [todos, setTodos] = useState([]);
+
+  const fetchTodos = async () => {
+    try {
+      const response = await axios.get(`${API_URL}/api/todos`); 
+      setTodos(response.data); 
+    } catch (error) {
+      console.error('Klaida gaunant duomenis iš serverio:', error);
+    }
+  };
+
+  useEffect(() => {
+    fetchTodos();
+  }, []);
 
   const handleAddTodo = (title, description) => {
     const newTodo = `${title}: ${description}`;
@@ -31,6 +39,7 @@ function HomePage() {
 }
 
 export default HomePage;
+
 
 
 
