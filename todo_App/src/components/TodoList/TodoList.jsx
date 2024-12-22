@@ -1,25 +1,35 @@
-import './TodoList.css';
 import PropTypes from 'prop-types';
+import './TodoList.css';
 
 function TodoList({ todos }) {
+  if (!todos || !Array.isArray(todos)) {
+    return <div>No todos available</div>;
+  }
+
   return (
-    <div className="todo-list">
-      <h2 className="todo-list-title">Mano darbai</h2>
-      <ul className="todo-grid">
-        {todos.map((todo, index) => (
+    <ul className="todo-list">
+      {todos.map((todo, index) => {
+        if (!todo || !todo.title) {
+          return null; // Skip malformed todos
+        }
+
+        return (
           <li key={index} className="todo-item">
-            {todo}
+            <h3>{todo.title}</h3>
+            <p>{todo.description}</p>
           </li>
-        ))}
-      </ul>
-    </div>
+        );
+      })}
+    </ul>
   );
 }
 
 TodoList.propTypes = {
-  todos: PropTypes.arrayOf(PropTypes.string).isRequired,
+  todos: PropTypes.array.isRequired,
 };
 
 export default TodoList;
+
+
 
 

@@ -9,22 +9,38 @@ import axios from 'axios';
 function HomePage() {
   const [todos, setTodos] = useState([]);
 
+  // Fetch Todos from the API
   const fetchTodos = async () => {
     try {
-      const response = await axios.get(`${API_URL}/api/todos`); 
+      const response = await axios.get(`${API_URL}/api/todos`);
       setTodos(response.data); 
     } catch (error) {
-      console.error('Klaida gaunant duomenis iš serverio:', error);
+      console.error('Error fetching data from server:', error);
     }
   };
 
   useEffect(() => {
-    fetchTodos();
+    fetchTodos(); 
   }, []);
 
-  const handleAddTodo = (title, description) => {
-    const newTodo = `${title}: ${description}`;
-    setTodos((prevTodos) => [...prevTodos, newTodo]);
+  // Handle adding a new todo (POST request)
+  const handleAddTodo = async (title, description) => {
+    const newTodo = {
+      title: title,           
+      description: description,
+    };
+    
+    try {
+      await axios.post(`${API_URL}/api/todos`, newTodo);
+
+      // Optimized part - directly update todos list without making a network call
+      setTodos(previousTodos => [
+        ...previousTodos,
+        newTodo
+      ]);
+    } catch (error) {
+      console.error('Error adding new task:', error);
+    }
   };
 
   return (
@@ -39,6 +55,8 @@ function HomePage() {
 }
 
 export default HomePage;
+
+
 
 
 
