@@ -1,11 +1,18 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import './TodoForm.css';
 import PropTypes from 'prop-types';
 
-function TodoForm({ onAddTodo }) {
+function TodoForm({ onAddTodo, onEditTodo, editingTodo }) {
   const [todoTitle, setTodoTitle] = useState('');
   const [todoDescription, setTodoDescription] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+
+  useEffect(() => {
+    if (editingTodo) {
+      setTodoTitle(editingTodo.title);
+      setTodoDescription(editingTodo.description);
+    }
+  }, [editingTodo]);
 
   const handleAddTodo = (e) => {
     e.preventDefault();
@@ -15,8 +22,13 @@ function TodoForm({ onAddTodo }) {
       return;
     }
 
-    setErrorMessage(''); // Clear error message if everything is valid
-    onAddTodo(todoTitle, todoDescription);
+    setErrorMessage('');
+    if (editingTodo) {
+      onEditTodo(editingTodo.id, todoTitle, todoDescription);
+    } else {
+      onAddTodo(todoTitle, todoDescription);
+    }
+
     setTodoTitle('');
     setTodoDescription('');
   };
@@ -37,7 +49,7 @@ function TodoForm({ onAddTodo }) {
         onChange={(e) => setTodoDescription(e.target.value)}
       />
       <button type="submit" className="add-todo-button">
-        Add Todo
+        {editingTodo ? 'Save Changes' : 'Add Todo'}
       </button>
       {errorMessage && <div className="error-message">{errorMessage}</div>}
     </form>
@@ -46,7 +58,10 @@ function TodoForm({ onAddTodo }) {
 
 TodoForm.propTypes = {
   onAddTodo: PropTypes.func.isRequired,
+  onEditTodo: PropTypes.func.isRequired,
+  editingTodo: PropTypes.object,
 };
 
 export default TodoForm;
+
 
