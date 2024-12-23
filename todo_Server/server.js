@@ -10,13 +10,12 @@ app.use(express.json());
 const mongoURI = process.env.MONGO_URI;
 const dbName = process.env.DB_NAME;
 
-mongoose.connect(mongoURI, { dbName, useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => {
-    console.log(`Connected to MongoDB database: ${dbName}`);
-  })
-  .catch((err) => {
-    console.error('Failed to connect to MongoDB', err);
-  });
+mongoose.connect(process.env.MONGO_URI, {
+  dbName: process.env.DB_NAME,
+})
+  .then(() => console.log(`Connected to MongoDB database: ${process.env.DB_NAME}: todos`))
+  .catch((error) => console.error('Error connecting to MongoDB:', error));
+
 
 // Todo model definition (mongoose schema)
 const todoSchema = new mongoose.Schema({
@@ -29,7 +28,7 @@ const Todo = mongoose.model('Todo', todoSchema);
 //// GET /api/todos - Retrieve all todos
 app.get('/api/todos', async (req, res) => {
   try {
-    const todos = await Todo.find(); // Fetch all todos from MongoDB
+    const todos = await Todo.find(); 
     res.json(todos);
   } catch (err) {
     res.status(500).json({ error: 'Failed to fetch todos' });
@@ -59,5 +58,9 @@ app.post('/api/todos', async (req, res) => {
 
 const PORT = process.env.PORT;
 app.listen(PORT, () => {
-  console.log(`Server is running at http://localhost:${PORT}`);
+  console.log(`Server: server.js is running at ${PORT}`);
 });
+
+
+// npm run dev
+// paleidzia visus serverius

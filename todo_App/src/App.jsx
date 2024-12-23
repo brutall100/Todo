@@ -16,3 +16,6 @@ function App() {
 }
 
 export default App
+
+// npm start
+// Palesime aplikacija 

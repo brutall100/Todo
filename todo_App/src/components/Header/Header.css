@@ -58,6 +58,31 @@ body {
   text-shadow: 0 0 10px var(--secondary-color);
 }
 
+button {
+  padding: 10px 15px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.welcome-message {
+  font-size: 16px;
+  margin-right: 10px;
+  color: #333;
+}
+
+.logout-button {
+  padding: 5px 10px;
+  background-color: #ff4b5c;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.logout-button:hover {
+  background-color: #e04350;
+}
+
 /* Mobile responsiveness */
 @media (max-width: 420px) {
   .nav {
