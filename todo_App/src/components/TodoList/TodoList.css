@@ -1,10 +1,15 @@
 /* Universal Styles */
 :root {
-  --primary-color: #3c552d;
-  --secondary-color: #d7b26d;
-  --accent-color: #ca7373;
-  --text-color: #eee2b5;
-  --bg-color: #f8f8f8;
+  --primary-color: #2c3e50; /* Deep blue */
+  --secondary-color: #16a085; /* Greenish teal */
+  --accent-color: #e74c3c; /* Vibrant red */
+  --text-color: #ecf0f1; /* Light grey */
+  --bg-color: #34495e; /* Soft navy */
+  --done-bg-color: #27ae60; /* Bright green */
+  --done-text-color: #ffffff; /* White */
+  --button-bg: #2980b9; /* Bright blue */
+  --button-hover-bg: #3498db; /* Sky blue */
+  --button-text-color: #ffffff; /* White */
 }
 
 /* Todo List Container */
@@ -17,6 +22,7 @@
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   text-align: center;
+  list-style: none; /* Remove list dots */
 }
 
 /* Title Styles */
@@ -33,7 +39,6 @@
   grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
   grid-template-rows: auto;
   gap: 1rem;
-  list-style: none;
   padding: 0;
   margin: 0;
 }
@@ -42,21 +47,69 @@
 .todo-item {
   background-color: var(--accent-color);
   color: var(--text-color);
-  word-break: break-all;
-  line-break: auto;
+  word-break: break-word;
   padding: 1rem;
   border-radius: 5px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   text-align: center;
   font-size: 1.2rem;
   font-weight: bold;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.3s ease;
 }
 
 /* Hover Effect */
 .todo-item:hover {
   transform: translateY(-5px);
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* Completed Items */
+.todo-item.done {
+  background-color: var(--done-bg-color);
+  color: var(--done-text-color);
+  text-decoration: line-through;
+  opacity: 0.8;
+}
+
+/* Button Styles */
+.todo-actions {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+button {
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  font-weight: bold;
+  color: var(--button-text-color);
+  background-color: var(--button-bg);
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+button:hover {
+  background-color: var(--button-hover-bg);
+  transform: scale(1.05);
+}
+
+.edit-btn {
+  background-color: var(--secondary-color);
+}
+
+.edit-btn:hover {
+  background-color: darken(var(--secondary-color), 10%);
+}
+
+.done-btn {
+  background-color: var(--accent-color);
+}
+
+.done-btn:hover {
+  background-color: darken(var(--accent-color), 10%);
 }
 
 /* Responsive Styles */
@@ -74,3 +127,4 @@
     padding: 0.8rem;
   }
 }
+
