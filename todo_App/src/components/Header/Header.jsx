@@ -1,11 +1,16 @@
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import UserContext from '../../components/UserContext';
 import LoginModal from '../LoginModal/LoginModal';
 import './Header.css';
 
 function Header() {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { isLoggedIn, userEmail, logout } = useContext(UserContext); //?? Access context values
+  const { isLoggedIn, userName, logout } = useContext(UserContext); // Access userName from context
+
+  // Log the context data to the console
+  useEffect(() => {
+    console.log("Context Data:", { isLoggedIn, userName });
+  }, [isLoggedIn, userName]);
 
   const toggleModal = () => setIsModalOpen(!isModalOpen);
 
@@ -32,7 +37,7 @@ function Header() {
         <button onClick={toggleModal}>Login / Register</button>
       ) : (
         <div>
-          <p className="welcome-message">Welcome back, {userEmail}!</p>
+          <p className="welcome-message">Welcome back, {userName || 'Guest'}!</p> {/* Show the user's name or 'Guest' */}
           <button onClick={logout} className="logout-button">Logout</button>
         </div>
       )}
@@ -47,6 +52,7 @@ function Header() {
 }
 
 export default Header;
+
 
 
 

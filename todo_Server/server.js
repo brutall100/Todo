@@ -1,7 +1,9 @@
-require('dotenv').config();
-const express = require('express');
-const cors = require('cors');
-const mongoose = require('mongoose');
+import dotenv from 'dotenv';
+import express from 'express';
+import cors from 'cors';
+import mongoose from 'mongoose';
+
+dotenv.config();
 const app = express();
 
 app.use(cors());
@@ -82,7 +84,7 @@ app.post('/api/todos', async (req, res) => {
 
 //// PUT /api/todos/:id - Edit a todo
 app.put('/api/todos/:id', async (req, res) => {
-  const { title, description, category } = req.body;
+  const { title, description, category, tags } = req.body;
   const { id } = req.params;
 
   if (!title || !description || !category) {
@@ -90,42 +92,14 @@ app.put('/api/todos/:id', async (req, res) => {
   }
 
   try {
-    const updatedTodo = await Todo.findByIdAndUpdate(
-      id,
-      { title, description, category },
-      { new: true }
-    );
-    if (!updatedTodo) {
-      return res.status(404).json({ error: 'Todo not found' });
-    }
-    res.json(updatedTodo);
-  } catch (err) {
-    res.status(500).json({ error: 'Failed to update todo' });
-  }
-});
-
-//// PUT /api/todos/:id - Edit a todo
-app.put('/api/todos/:id', async (req, res) => {
-  const { title, description, category, tags } = req.body;
-  const { id } = req.params;
-
-  if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(400).json({ error: 'Invalid ID format' });
-  }
-
-  try {
     if (!mongoose.Types.ObjectId.isValid(id)) {
       return res.status(400).json({ error: 'Invalid todo ID' });
-    }
-
-    if (!title || !description || !category) {
-      return res.status(400).json({ error: 'Title, description, and category are required' });
     }
 
     const updatedTodo = await Todo.findByIdAndUpdate(
       id,
       { title, description, category, tags },
-      { new: true } // Return the updated todo
+      { new: true }
     );
 
     if (!updatedTodo) {
@@ -134,11 +108,10 @@ app.put('/api/todos/:id', async (req, res) => {
 
     res.json(updatedTodo);
   } catch (err) {
-    console.error('Error updating todo:', err); // Add this line
+    console.error('Error updating todo:', err);
     res.status(500).json({ error: 'Failed to update todo' });
   }
 });
-
 
 //// PATCH /api/todos/:id/done - Mark a todo as done or undone
 app.patch('/api/todos/:id', async (req, res) => {
@@ -168,3 +141,44 @@ app.listen(PORT, () => {
 
 // npm run dev
 // paleidzia visus serverius
+
+
+
+
+
+
+
+// //// PUT /api/todos/:id - Edit a todo
+// app.put('/api/todos/:id', async (req, res) => {
+//   const { title, description, category, tags } = req.body;
+//   const { id } = req.params;
+
+//   if (!mongoose.Types.ObjectId.isValid(id)) {
+//     return res.status(400).json({ error: 'Invalid ID format' });
+//   }
+
+//   try {
+//     if (!mongoose.Types.ObjectId.isValid(id)) {
+//       return res.status(400).json({ error: 'Invalid todo ID' });
+//     }
+
+//     if (!title || !description || !category) {
+//       return res.status(400).json({ error: 'Title, description, and category are required' });
+//     }
+
+//     const updatedTodo = await Todo.findByIdAndUpdate(
+//       id,
+//       { title, description, category, tags },
+//       { new: true } // Return the updated todo
+//     );
+
+//     if (!updatedTodo) {
+//       return res.status(404).json({ error: 'Todo not found' });
+//     }
+
+//     res.json(updatedTodo);
+//   } catch (err) {
+//     console.error('Error updating todo:', err); // Add this line
+//     res.status(500).json({ error: 'Failed to update todo' });
+//   }
+// });

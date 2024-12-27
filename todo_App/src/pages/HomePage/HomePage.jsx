@@ -3,23 +3,23 @@ import Header from '../../components/Header/Header';
 import TodoList from '../../components/TodoList/TodoList';
 import TodoForm from '../../components/TodoForm/TodoForm';
 import { API_URL } from '../../config/Api_URL';
-import UserContext from '../../components/UserContext'; // Correct import for UserContext
+import UserContext from '../../components/UserContext';
 import './HomePage.css';
 import axios from 'axios';
 
 function HomePage() {
-  const { isLoggedIn, userEmail } = useContext(UserContext); // Access user info from context
+  const { isLoggedIn, userName } = useContext(UserContext); // Access user info from context
   const [todos, setTodos] = useState([]);
   const [categories, setCategories] = useState([]);
   const [editingTodo, setEditingTodo] = useState(null);
 
-  // Fetch Todos from the API
+  //// Fetch Todos from the API
   const fetchTodos = async () => {
     try {
       const response = await axios.get(`${API_URL}/api/todos`);
       const normalizedTodos = response.data.map((todo) => ({
         ...todo,
-        id: todo._id || todo.id, // Ensure consistent `id` property
+        id: todo._id || todo.id, 
       }));
       setTodos(normalizedTodos);
     } catch (error) {
@@ -27,11 +27,11 @@ function HomePage() {
     }
   };
 
-  // Fetch Categories from the API
+  //// Fetch Categories from the API
   const fetchCategories = async () => {
     try {
       const response = await axios.get(`${API_URL}/api/categories`);
-      setCategories(response.data); // Store categories
+      setCategories(response.data);
     } catch (error) {
       console.error('Error fetching categories:', error);
     }
@@ -39,7 +39,7 @@ function HomePage() {
 
   useEffect(() => {
     fetchTodos();
-    fetchCategories(); // Fetch categories when the page loads
+    fetchCategories(); 
   }, []);
 
   const handleAddTodo = async (title, description, category) => {
@@ -47,16 +47,15 @@ function HomePage() {
       title: title,
       description: description,
       category: category,
-      done: false, // Default to not done
+      done: false, 
     };
 
     try {
       const response = await axios.post(`${API_URL}/api/todos`, newTodo);
 
-      // Normalize the response data to ensure `id` is consistent
       const createdTodo = {
         ...response.data,
-        id: response.data._id || response.data.id, // Map `_id` to `id` if necessary
+        id: response.data._id || response.data.id, 
       };
 
       setTodos((previousTodos) => [...previousTodos, createdTodo]);
@@ -106,12 +105,12 @@ function HomePage() {
     <div className="home-page">
       <Header />
       <div className="content">
-        {isLoggedIn && <p className="welcome-message">Welcome back, {userEmail}!</p>} {/* Display user email */}
+        {isLoggedIn && <p className="welcome-message">Welcome back, {userName}!</p>} {/* Display user name */}
         <TodoForm
           onAddTodo={handleAddTodo}
           onEditTodo={handleEditTodo}
           editingTodo={editingTodo}
-          categories={categories}  // Pass categories to TodoForm
+          categories={categories} 
         />
         <TodoList
           todos={todos}
@@ -124,6 +123,7 @@ function HomePage() {
 }
 
 export default HomePage;
+
 
 
 

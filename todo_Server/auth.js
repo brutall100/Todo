@@ -1,6 +1,6 @@
-const mongoose = require('mongoose');
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
+import mongoose from 'mongoose';
+import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
 
 // User schema for registration
 const userSchema = new mongoose.Schema({
@@ -24,7 +24,7 @@ const User = mongoose.model('User', userSchema);
 // Register user
 const registerUser = async (req, res) => {
   const { name, email, password } = req.body;
-  
+
   try {
     // Check if email already exists
     const existingUser = await User.findOne({ email });
@@ -36,7 +36,7 @@ const registerUser = async (req, res) => {
     const newUser = new User({
       name,
       email,
-      password: await bcrypt.hash(password, 10) // Hash password before storing it
+      password: await bcrypt.hash(password, 10), // Hash password before storing it
     });
 
     await newUser.save(); // Save the user to the database
@@ -49,14 +49,10 @@ const registerUser = async (req, res) => {
   }
 };
 
-
-
 // Login user
-// Login user
-// Login logic
 const loginUser = async (req, res) => {
   const { identifier, password } = req.body;
-  
+
   try {
     let user;
     if (/\S+@\S+\.\S+/.test(identifier)) {
@@ -83,6 +79,6 @@ const loginUser = async (req, res) => {
   }
 };
 
+export { registerUser, loginUser, User };  // Export User model
 
 
-module.exports = { registerUser, loginUser };
