@@ -1,12 +1,14 @@
+import { useState, useEffect, useContext } from 'react';
 import Header from '../../components/Header/Header';
 import TodoList from '../../components/TodoList/TodoList';
 import TodoForm from '../../components/TodoForm/TodoForm';
 import { API_URL } from '../../config/Api_URL';
+import UserContext from '../../components/UserContext'; // Correct import for UserContext
 import './HomePage.css';
-import { useState, useEffect } from 'react';
 import axios from 'axios';
 
 function HomePage() {
+  const { isLoggedIn, userEmail } = useContext(UserContext); // Access user info from context
   const [todos, setTodos] = useState([]);
   const [categories, setCategories] = useState([]);
   const [editingTodo, setEditingTodo] = useState(null);
@@ -24,7 +26,6 @@ function HomePage() {
       console.error('Error fetching data from server:', error);
     }
   };
-  
 
   // Fetch Categories from the API
   const fetchCategories = async () => {
@@ -48,32 +49,31 @@ function HomePage() {
       category: category,
       done: false, // Default to not done
     };
-  
+
     try {
       const response = await axios.post(`${API_URL}/api/todos`, newTodo);
-  
+
       // Normalize the response data to ensure `id` is consistent
       const createdTodo = {
         ...response.data,
         id: response.data._id || response.data.id, // Map `_id` to `id` if necessary
       };
-  
+
       setTodos((previousTodos) => [...previousTodos, createdTodo]);
     } catch (error) {
       console.error('Error adding new task:', error);
     }
   };
-  
-  
+
   const handleEditTodo = async (id, title, description, category) => {
     if (!id) {
       console.error('Cannot update todo: id is undefined');
       return;
     }
-  
+
     const updatedTodo = { title, description, category };
     console.log('Updating todo:', id, updatedTodo);
-  
+
     try {
       await axios.put(`${API_URL}/api/todos/${id}`, updatedTodo);
       const updatedTodos = todos.map((todo) =>
@@ -85,11 +85,6 @@ function HomePage() {
       console.error('Error updating task:', error);
     }
   };
-  
-  
-  
-  
-  
 
   const handleMarkAsDone = async (id) => {
     try {
@@ -111,6 +106,7 @@ function HomePage() {
     <div className="home-page">
       <Header />
       <div className="content">
+        {isLoggedIn && <p className="welcome-message">Welcome back, {userEmail}!</p>} {/* Display user email */}
         <TodoForm
           onAddTodo={handleAddTodo}
           onEditTodo={handleEditTodo}

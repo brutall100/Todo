@@ -1,31 +1,13 @@
-import { useState, useEffect } from 'react';
+import { useState, useContext } from 'react';
+import UserContext from '../../components/UserContext';
 import LoginModal from '../LoginModal/LoginModal';
 import './Header.css';
 
 function Header() {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [userEmail, setUserEmail] = useState('');
-
-  // Check localStorage on initial load
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-    const email = localStorage.getItem('email');
-
-    if (token && email) {
-      setIsLoggedIn(true);
-      setUserEmail(email);
-    }
-  }, []);
+  const { isLoggedIn, userEmail, logout } = useContext(UserContext); //?? Access context values
 
   const toggleModal = () => setIsModalOpen(!isModalOpen);
-
-  const logout = () => {
-    localStorage.removeItem('token'); // Remove the token
-    localStorage.removeItem('email'); // Remove the email
-    setIsLoggedIn(false); // Reset login state
-    setUserEmail(''); // Clear the email
-  };
 
   return (
     <header className="header">
@@ -58,8 +40,6 @@ function Header() {
       {isModalOpen && (
         <LoginModal 
           onClose={toggleModal} 
-          setIsLoggedIn={setIsLoggedIn} 
-          setUserEmail={setUserEmail} 
         />
       )}
     </header>
@@ -67,6 +47,7 @@ function Header() {
 }
 
 export default Header;
+
 
 
 
