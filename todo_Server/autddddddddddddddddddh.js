@@ -50,34 +50,30 @@ const registerUser = async (req, res) => {
 };
 
 // Login user
+// Login user
 const loginUser = async (req, res) => {
-  const { identifier, password } = req.body;
+  const { name, password } = req.body;  // Only accept 'name' and 'password'
 
   try {
-    let user;
-    if (/\S+@\S+\.\S+/.test(identifier)) {
-      // Check if identifier is an email
-      user = await User.findOne({ email: identifier });
-    } else {
-      // Check if identifier is a name
-      user = await User.findOne({ name: identifier });
-    }
+    // Find the user by name
+    const user = await User.findOne({ name });
 
     if (!user) {
-      return res.status(400).json({ message: 'Invalid email/name or password' });
+      return res.status(400).json({ message: 'Invalid name or password' });
     }
 
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
-      return res.status(400).json({ message: 'Invalid email/name or password' });
+      return res.status(400).json({ message: 'Invalid name or password' });
     }
 
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
-    res.status(200).json({ token });
+    res.status(200).json({ token, name: user.name }); // Return token and name
   } catch (error) {
     res.status(500).json({ message: 'Server error' });
   }
 };
+
 
 export { registerUser, loginUser, User };  // Export User model
 

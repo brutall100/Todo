@@ -1,6 +1,6 @@
 import { useState, useContext, useEffect } from 'react';
 import UserContext from '../../components/UserContext';
-import LoginModal from '../LoginModal/LoginModal';
+import LoginModal from '../LogRegModal/LogRegModal';
 import './Header.css';
 
 function Header() {

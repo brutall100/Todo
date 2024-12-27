@@ -1,6 +1,5 @@
 import { createContext, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import axios from 'axios';
 
 const UserContext = createContext();
 
@@ -11,45 +10,26 @@ export const UserProvider = ({ children }) => {
 
   useEffect(() => {
     const token = localStorage.getItem('token');
-    const email = localStorage.getItem('email');
+    const name = localStorage.getItem('name');
 
-    if (token && email) {
+    if (token && name) {
       setIsLoggedIn(true);
-      setUserEmail(email);
-      fetchUserData(token); // Fetch user data on component mount
+      setUserEmail(name); // Now using name for email
+      setUserName(name);
     }
   }, []);
 
-  const fetchUserData = async (token) => {
-    try {
-      const response = await axios.get('/api/users/me', {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
-      if (response.data && response.data.name) {
-        setUserName(response.data.name);
-      } else {
-        console.error('Failed to fetch user name');
-      }
-    } catch (error) {
-      console.error('Error fetching user data:', error);
-      logout(); // Clear state if token is invalid
-    }
-  };
-
-  const login = (email, token) => {
-    localStorage.setItem('email', email);
+  const login = (name, token) => {
+    localStorage.setItem('name', name);
     localStorage.setItem('token', token);
     setIsLoggedIn(true);
-    setUserEmail(email);
-    fetchUserData(token); // Fetch user data on successful login
+    setUserEmail(name); 
+    setUserName(name);
   };
 
   const logout = () => {
     localStorage.removeItem('token');
-    localStorage.removeItem('email');
+    localStorage.removeItem('name');
     setIsLoggedIn(false);
     setUserEmail('');
     setUserName('');
@@ -78,6 +58,7 @@ UserProvider.propTypes = {
 };
 
 export default UserContext;
+
 
 
 
